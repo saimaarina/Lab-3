@@ -122,11 +122,65 @@ proportions vary depending on the category.
 
 ### Exercise 4
 
+``` r
+nobel_living_science <- nobel %>% 
+  select(firstname, surname, died_date, country, gender, category, born_country) %>% 
+  filter(is.na(died_date)) %>% 
+  filter(!is.na(country))
+```
+
+``` r
+nobel_living_science <- nobel_living_science %>%
+  mutate(
+    country_us = if_else(country == "USA", "USA", "Other")
+  )
+```
+
+``` r
+nobel_living_science <- nobel_living_science %>%
+  mutate(
+    born_country_us = if_else(born_country == "USA", "USA", "Other")
+  )
+```
+
+``` r
+nobel_living_science %>% 
+  count(born_country_us)
+```
+
+    ## # A tibble: 2 × 2
+    ##   born_country_us     n
+    ##   <chr>           <int>
+    ## 1 Other             123
+    ## 2 USA               105
+
 …
+
+105 of the winners were born in the U.S.
 
 ### Exercise 5
 
-…
+``` r
+ggplot(data = nobel_living_science,
+       mapping = aes(x = country_us, fill = born_country_us)) +
+  geom_bar() +
+  facet_wrap(~ category) +
+  coord_flip() +
+  labs(
+    x = "Country at time of prize (USA vs Other)",
+    y = "Number of laureates",
+    title = "Living Nobel laureates by prize category and whether they were in the US and origin of birth",
+    fill = "Born in US?"
+)
+```
+
+![](lab-03_files/figure-gfm/unnamed-chunk-5-1.png)<!-- --> …
+Interpretation:
+
+Yes, the data is supportive. A large amount of laureates who won their
+prize in the U.S. are classified as “other” for where they were born in
+every category, indicating that many of the US-based Nobel winners were
+not born in the U.S.
 
 ### Exercise 6
 
