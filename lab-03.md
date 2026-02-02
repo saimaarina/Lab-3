@@ -39,7 +39,7 @@ represents a nobel lauterate individual.
 
 ``` r
 nobel_living <- nobel %>% 
-  select(firstname, surname, died_date, country, gender) %>% 
+  select(firstname, surname, died_date, country, gender, category) %>% 
   filter(is.na(died_date)) %>% 
   filter(!is.na(country))
 ```
@@ -80,9 +80,45 @@ nobel %>%
 
 ### Exercise 3
 
-Remove this text, and add your answer for Exercise 1 here. Add code
-chunks as needed. Don’t forget to label your code chunk. Do not use
-spaces in code chunk labels.
+``` r
+nobel_living <- nobel %>% 
+  select(firstname, surname, died_date, country, gender, category) %>% 
+  filter(is.na(died_date)) %>% 
+  filter(!is.na(country))
+```
+
+``` r
+nobel_living <- nobel_living %>%
+  mutate(
+    country_us = if_else(country == "USA", "USA", "Other")
+  )
+```
+
+``` r
+nobel_living_science <- nobel_living %>%
+  filter(category %in% c("Physics", "Medicine", "Chemistry", "Economics"))
+```
+
+``` r
+ggplot(data = nobel_living_science,
+       mapping = aes(x = country_us, fill = country_us)) +
+  geom_bar() +
+  facet_wrap(~ category) +
+  coord_flip() +
+  labs(
+    x = "Country at time of prize (USA vs Other)",
+    y = "Number of laureates",
+    title = "Living Nobel laureates by prize category and whether they were in the US"
+)
+```
+
+![](lab-03_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+Interpretation
+
+A clear majority of living Nobel laureates in these fields were based in
+the US when they received their awards. I would say the Buzzfeed
+headline is supported broadly by the data, although the exact
+proportions vary depending on the category.
 
 ### Exercise 4
 
