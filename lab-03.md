@@ -20,9 +20,20 @@ instructions](https://datascience4psych.github.io/DataScience4Psych/lab03.html).
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here. Add code
-chunks as needed. Don’t forget to label your code chunk. Do not use
-spaces in code chunk labels.
+``` r
+nrow(nobel)
+```
+
+    ## [1] 935
+
+``` r
+ncol(nobel)
+```
+
+    ## [1] 26
+
+There are 935 observations and there are 26 variables. Each row
+represents a nobel lauterate individual.
 
 ### Exercise 2
 
