@@ -99,13 +99,12 @@ nobel_living_science <- nobel %>%
   filter(!is.na(country))
 ```
 
-```{r}
+```{r, make variable}
 nobel_living_science <- nobel_living_science %>%
   mutate(
     country_us = if_else(country == "USA", "USA", "Other")
   )
 ```
-
 
 ```{r, make new variable}
 nobel_living_science <- nobel_living_science %>%
@@ -126,7 +125,7 @@ nobel_living_science %>%
 
 ### Exercise 5
 
-```{r}
+```{r, create barplot}
 ggplot(data = nobel_living_science,
        mapping = aes(x = country_us, fill = born_country_us)) +
   geom_bar() +
@@ -145,5 +144,14 @@ Interpretation:
 Yes, the data is supportive. A large amount of laureates who won their prize in the U.S. are classified as "other" for where they were born in every category, indicating that many of the US-based Nobel winners were not born in the U.S.
 
 ### Exercise 6
+```{r, filtering by countries}
+nobel_living_science %>% 
+  filter(country == "USA",
+         born_country != "USA") %>%
+  count(born_country) %>% 
+  arrange(desc(n))
+```
 
+
+Germany and the United Kingdom are the most common countries. 
 ...
